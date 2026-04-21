@@ -102,12 +102,12 @@ class AppTheme {
       ),
 
       // Card
-      cardTheme: CardTheme(
+      cardTheme: const CardTheme(
         color: AppColors.surface,
         elevation: 0,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(16))),
         margin: EdgeInsets.zero,
-        shadowColor: Colors.black.withOpacity(0.06),
+        shadowColor: Colors.transparent,
       ),
 
       // AppBar

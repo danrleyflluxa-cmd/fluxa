@@ -37,7 +37,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
             ),
             const Divider(height: 1, indent: 52, color: AppColors.divider),
             _SwitchTile(
-              icon: CupertinoIcons.storefront,
+              icon: CupertinoIcons.shopping_cart,
               label: 'Vendas',
               subtitle: 'Novos pedidos recebidos',
               value: _sales,

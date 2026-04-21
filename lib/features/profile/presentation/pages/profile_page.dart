@@ -6,6 +6,7 @@ import '../../../../core/theme/app_theme.dart';
 import '../../../../shared/providers/auth_provider.dart';
 import '../../../../shared/providers/profile_provider.dart';
 import '../../../../shared/providers/transactions_provider.dart';
+import '../../../wallet/domain/transaction_model.dart';
 import 'edit_profile_page.dart';
 import 'settings_page.dart';
 
