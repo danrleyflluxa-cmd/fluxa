@@ -63,7 +63,6 @@ class _LoginPageState extends ConsumerState<LoginPage>
       body: Stack(
         fit: StackFit.expand,
         children: [
-          // Fundo com orbs decorativos
           const _Background(),
 
           SafeArea(
@@ -71,122 +70,94 @@ class _LoginPageState extends ConsumerState<LoginPage>
               opacity: _fade,
               child: SlideTransition(
                 position: _slide,
-                child: SingleChildScrollView(
-                  padding: const EdgeInsets.symmetric(horizontal: 24),
-                  child: Column(
-                    children: [
-                      const SizedBox(height: 56),
-                      const _LogoSection(),
-                      const SizedBox(height: 40),
+                child: Center(
+                  child: SingleChildScrollView(
+                    padding: const EdgeInsets.symmetric(horizontal: 24),
+                    child: ConstrainedBox(
+                      constraints: const BoxConstraints(maxWidth: 420),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const _LogoSection(),
+                          const SizedBox(height: 48),
 
-                      // Card principal
-                      Container(
-                        decoration: BoxDecoration(
-                          color: AppColors.surface,
-                          borderRadius: BorderRadius.circular(AppRadius.xl),
-                          boxShadow: AppShadows.elevated,
-                        ),
-                        padding: const EdgeInsets.all(24),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              _isSignUp ? 'Criar conta' : 'Bem-vindo de volta',
-                              style: GoogleFonts.inter(
-                                  fontSize: 22, fontWeight: FontWeight.w700,
-                                  color: AppColors.textPrimary, letterSpacing: -0.4),
+                          // Card principal
+                          Container(
+                            decoration: BoxDecoration(
+                              color: AppColors.surface,
+                              borderRadius: BorderRadius.circular(28),
+                              border: Border.all(color: AppColors.divider, width: 1),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.4),
+                                  blurRadius: 40,
+                                  offset: const Offset(0, 20),
+                                ),
+                              ],
                             ),
-                            const SizedBox(height: 4),
-                            Text(
-                              _isSignUp
-                                  ? 'Junte-se à economia circular.'
-                                  : 'Entre para continuar no Fluxa.',
-                              style: GoogleFonts.inter(
-                                  fontSize: 15, color: AppColors.textSecondary),
-                            ),
-                            const SizedBox(height: 24),
+                            padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 40),
+                            child: Column(
+                              children: [
+                                Text(
+                                  _isSignUp ? 'Criar conta' : 'Bem-vindo de volta',
+                                  textAlign: TextAlign.center,
+                                  style: GoogleFonts.inter(
+                                      fontSize: 26, fontWeight: FontWeight.w800,
+                                      color: Colors.white, letterSpacing: -0.5),
+                                ),
+                                const SizedBox(height: 8),
+                                Text(
+                                  _isSignUp
+                                      ? 'Junte-se à economia circular.'
+                                      : 'Acesse sua conta para continuar.',
+                                  textAlign: TextAlign.center,
+                                  style: GoogleFonts.inter(
+                                      fontSize: 15, color: AppColors.textSecondary),
+                                ),
+                                const SizedBox(height: 40),
 
-                            // Social
-                            _SocialBtn(
-                              assetIcon: Icons.g_mobiledata_rounded,
-                              label: 'Continuar com Google',
-                              onTap: isLoading ? null
-                                  : () => ref.read(authProvider.notifier).signInWithGoogle(),
-                            ),
-                            const SizedBox(height: 10),
-                            _SocialBtn(
-                              assetIcon: Icons.apple_rounded,
-                              label: 'Continuar com Apple',
-                              onTap: isLoading ? null
-                                  : () => ref.read(authProvider.notifier).signInWithApple(),
-                            ),
+                                // Formulário
+                                _EmailForm(
+                                  formKey:      _formKey,
+                                  emailCtrl:    _emailCtrl,
+                                  passwordCtrl: _passwordCtrl,
+                                  obscurePass:  _obscurePass,
+                                  isSignUp:     _isSignUp,
+                                  isLoading:    isLoading,
+                                  onTogglePass: () => setState(() => _obscurePass = !_obscurePass),
+                                  onSubmit:     _submit,
+                                ),
 
-                            const SizedBox(height: 20),
-                            _OrDivider(),
-                            const SizedBox(height: 20),
-
-                            // E-mail progressivo
-                            AnimatedSize(
-                              duration: const Duration(milliseconds: 280),
-                              curve: Curves.easeOutCubic,
-                              child: !_emailExpanded
-                                  ? _GhostBtn(
-                                      label: 'Continuar com e-mail',
-                                      icon: Icons.mail_outline_rounded,
-                                      onTap: () => setState(() => _emailExpanded = true),
-                                    )
-                                  : _EmailForm(
-                                      formKey:      _formKey,
-                                      emailCtrl:    _emailCtrl,
-                                      passwordCtrl: _passwordCtrl,
-                                      obscurePass:  _obscurePass,
-                                      isSignUp:     _isSignUp,
-                                      isLoading:    isLoading,
-                                      onTogglePass: () => setState(() => _obscurePass = !_obscurePass),
-                                      onSubmit:     _submit,
+                                const SizedBox(height: 32),
+                                GestureDetector(
+                                  onTap: () => setState(() {
+                                    _isSignUp = !_isSignUp;
+                                    _emailExpanded = false;
+                                  }),
+                                  child: RichText(
+                                    text: TextSpan(
+                                      style: GoogleFonts.inter(
+                                          fontSize: 14, color: AppColors.textSecondary),
+                                      children: [
+                                        TextSpan(
+                                            text: _isSignUp ? 'Já tem conta? ' : 'Não tem conta? '),
+                                        TextSpan(
+                                          text: _isSignUp ? 'Entrar' : 'Criar conta grátis',
+                                          style: GoogleFonts.inter(
+                                              color: AppColors.success,
+                                              fontWeight: FontWeight.w600),
+                                        ),
+                                      ],
                                     ),
-                            ),
-
-                            const SizedBox(height: 20),
-                            Center(
-                              child: GestureDetector(
-                                onTap: () => setState(() {
-                                  _isSignUp = !_isSignUp;
-                                  _emailExpanded = false;
-                                }),
-                                child: RichText(
-                                  text: TextSpan(
-                                    style: GoogleFonts.inter(
-                                        fontSize: 14, color: AppColors.textSecondary),
-                                    children: [
-                                      TextSpan(
-                                          text: _isSignUp ? 'Já tem conta? ' : 'Não tem conta? '),
-                                      TextSpan(
-                                        text: _isSignUp ? 'Entrar' : 'Criar agora',
-                                        style: GoogleFonts.inter(
-                                            color: AppColors.primary,
-                                            fontWeight: FontWeight.w600),
-                                      ),
-                                    ],
                                   ),
                                 ),
-                              ),
+                              ],
                             ),
-                          ],
-                        ),
+                          ),
+                          const SizedBox(height: 40),
+                        ],
                       ),
-
-                      const SizedBox(height: 28),
-                      Text(
-                        'Ao continuar, você concorda com os\nTermos de Uso e Política de Privacidade.',
-                        textAlign: TextAlign.center,
-                        style: GoogleFonts.inter(
-                            fontSize: 12,
-                            color: AppColors.textSecondary.withOpacity(0.6),
-                            height: 1.6),
-                      ),
-                      const SizedBox(height: 32),
-                    ],
+                    ),
                   ),
                 ),
               ),
@@ -219,27 +190,29 @@ class _Background extends StatelessWidget {
       child: Stack(
         children: [
           Positioned(
-            top: -120, right: -80,
+            top: -150, left: 0, right: 0,
             child: Container(
-              width: 320, height: 320,
+              height: 400,
               decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                gradient: RadialGradient(colors: [
-                  AppColors.primary.withOpacity(0.12),
-                  AppColors.primary.withOpacity(0),
-                ]),
+                gradient: RadialGradient(
+                  colors: [
+                    AppColors.success.withOpacity(0.08),
+                    AppColors.success.withOpacity(0),
+                  ],
+                  radius: 1.2,
+                ),
               ),
             ),
           ),
           Positioned(
-            bottom: -140, left: -100,
+            bottom: -200, right: -100,
             child: Container(
-              width: 360, height: 360,
+              width: 500, height: 500,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 gradient: RadialGradient(colors: [
-                  AppColors.primaryDark.withOpacity(0.08),
-                  AppColors.primaryDark.withOpacity(0),
+                  AppColors.primary.withOpacity(0.05),
+                  AppColors.primary.withOpacity(0),
                 ]),
               ),
             ),
@@ -256,7 +229,7 @@ class _LogoSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const FluxaLogo(size: 80, showText: true, darkBackground: false);
+    return const FluxaLogo(size: 90, showText: true, darkBackground: true);
   }
 }
 
@@ -367,16 +340,18 @@ class _EmailForm extends StatelessWidget {
         children: [
           _InputField(
             controller: emailCtrl,
-            label: 'E-mail',
+            label: 'Email',
             hint: 'seu@email.com',
+            icon: Icons.mail_outline_rounded,
             keyboardType: TextInputType.emailAddress,
             validator: (v) => (v == null || !v.contains('@')) ? 'E-mail inválido' : null,
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: 16),
           _InputField(
             controller: passwordCtrl,
             label: 'Senha',
             hint: '••••••••',
+            icon: Icons.lock_outline_rounded,
             obscure: obscurePass,
             suffix: IconButton(
               icon: Icon(
@@ -387,13 +362,41 @@ class _EmailForm extends StatelessWidget {
             ),
             validator: (v) => (v == null || v.length < 6) ? 'Mínimo 6 caracteres' : null,
           ),
-          const SizedBox(height: 20),
-          ElevatedButton(
-            onPressed: isLoading ? null : onSubmit,
-            child: isLoading
-                ? const SizedBox(width: 22, height: 22,
-                    child: CircularProgressIndicator(strokeWidth: 2.5, color: Colors.white))
-                : Text(isSignUp ? 'Criar conta' : 'Entrar'),
+          const SizedBox(height: 32),
+          GestureDetector(
+            onTap: isLoading ? null : onSubmit,
+            child: Container(
+              height: 56,
+              decoration: BoxDecoration(
+                color: AppColors.success,
+                borderRadius: BorderRadius.circular(16),
+                boxShadow: [
+                  BoxShadow(
+                    color: AppColors.success.withOpacity(0.3),
+                    blurRadius: 20,
+                    offset: const Offset(0, 8),
+                  ),
+                ],
+              ),
+              child: Center(
+                child: isLoading
+                    ? const SizedBox(width: 24, height: 24,
+                        child: CircularProgressIndicator(strokeWidth: 2.5, color: Colors.white))
+                    : Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            isSignUp ? 'Criar conta' : 'Entrar',
+                            style: GoogleFonts.inter(
+                                fontSize: 16, fontWeight: FontWeight.w700,
+                                color: const Color(0xFF0A0A0B)),
+                          ),
+                          const SizedBox(width: 8),
+                          const Icon(Icons.arrow_forward_rounded, size: 20, color: Color(0xFF0A0A0B)),
+                        ],
+                      ),
+              ),
+            ),
           ),
         ],
       ),
@@ -404,6 +407,7 @@ class _EmailForm extends StatelessWidget {
 class _InputField extends StatelessWidget {
   final TextEditingController controller;
   final String label, hint;
+  final IconData icon;
   final bool obscure;
   final TextInputType? keyboardType;
   final Widget? suffix;

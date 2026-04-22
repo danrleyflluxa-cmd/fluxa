@@ -8,24 +8,24 @@ class AppColors {
   static const primaryDark = Color(0xFF0055CC);
 
   // Backgrounds
-  static const background  = Color(0xFFF2F2F7); // iOS system grouped background
-  static const surface     = Color(0xFFFFFFFF);
-  static const surfaceElevated = Color(0xFFF9F9FB);
+  static const background  = Color(0xFF0A0A0B); // Dark background
+  static const surface     = Color(0xFF141416); // Card background
+  static const surfaceElevated = Color(0xFF1C1C1E);
 
   // Texto
-  static const textPrimary   = Color(0xFF1C1C1E);
-  static const textSecondary = Color(0xFF8E8E93);
-  static const textTertiary  = Color(0xFFC7C7CC);
+  static const textPrimary   = Color(0xFFFFFFFF);
+  static const textSecondary = Color(0xFFA1A1AA);
+  static const textTertiary  = Color(0xFF52525B);
 
   // Separadores
-  static const divider     = Color(0xFFE5E5EA);
-  static const dividerHard = Color(0xFFC6C6C8);
+  static const divider     = Color(0xFF27272A);
+  static const dividerHard = Color(0xFF3F3F46);
 
   // Semânticas
-  static const success = Color(0xFF34C759);
+  static const success = Color(0xFF00D293); // Green from the image
   static const warning = Color(0xFFFF9F0A);
-  static const error   = Color(0xFFFF3B30);
-  static const purple  = Color(0xFFAF52DE);
+  static const error   = Color(0xFFFF453A);
+  static const purple  = Color(0xFFBF5AF2);
 
   // Gradiente do card principal
   static const gradientStart = Color(0xFF007AFF);
