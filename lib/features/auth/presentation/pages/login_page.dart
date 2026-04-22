@@ -415,24 +415,42 @@ class _InputField extends StatelessWidget {
 
   const _InputField({
     required this.controller, required this.label, required this.hint,
-    this.obscure = false, this.keyboardType, this.suffix, this.validator,
+    required this.icon, this.obscure = false, this.keyboardType, this.suffix, this.validator,
   });
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      controller:   controller,
-      obscureText:  obscure,
-      keyboardType: keyboardType,
-      validator:    validator,
-      style: GoogleFonts.inter(fontSize: 15, color: AppColors.textPrimary),
-      decoration: InputDecoration(
-        labelText:  label,
-        hintText:   hint,
-        suffixIcon: suffix,
-        filled:     true,
-        fillColor:  AppColors.background,
-      ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(label, style: GoogleFonts.inter(fontSize: 14, color: Colors.white, fontWeight: FontWeight.w500)),
+        const SizedBox(height: 8),
+        TextFormField(
+          controller:   controller,
+          obscureText:  obscure,
+          keyboardType: keyboardType,
+          validator:    validator,
+          style: GoogleFonts.inter(fontSize: 15, color: Colors.white),
+          decoration: InputDecoration(
+            hintText:   hint,
+            hintStyle:  GoogleFonts.inter(color: AppColors.textTertiary),
+            prefixIcon: Icon(icon, size: 20, color: AppColors.textSecondary),
+            suffixIcon: suffix,
+            filled:     true,
+            fillColor:  const Color(0xFF141416),
+            contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+            border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+                borderSide: const BorderSide(color: Color(0xFF27272A))),
+            enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+                borderSide: const BorderSide(color: Color(0xFF27272A))),
+            focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+                borderSide: const BorderSide(color: AppColors.success, width: 1.5)),
+          ),
+        ),
+      ],
     );
   }
 }
